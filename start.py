@@ -46,8 +46,6 @@ driver.switch_to.default_content()
 
 driver.find_element_by_class_name("botaoLoginNfg").click()
 
-delay()
-
 driver.execute_script('document.getElementById("txtDtInicial").value = "01012022"')
 
 driver.execute_script('document.getElementById("txtDtFinal").value = "17052022"')
@@ -67,10 +65,14 @@ while i <= numRows:
     link = driver.find_element_by_xpath(xpath).get_attribute("href")
     driver.get(link)
 
-    try:
-        driver.find_element_by_xpath("//table[@width='100%']/tbody/tr[4]/td/table/tbody/tr[2]/td[1]/input").click()
-    except:
-        print("Incapaz de avançar")
+    frames = driver.find_elements_by_tag_name("iframe")
+    driver.switch_to.frame(frames[0])
+
+    delay()
+
+    driver.find_element_by_xpath("//input[@class='button']").click()
+
+    driver.switch_to.default_content()
 
     driver.get(baseLink)
 
@@ -84,4 +86,4 @@ while i <= numRows:
 
     i += 1
 
-driver.find_element_by_xpath("//button[@class='dt-button buttons-csv buttons-html5']").click()
+#driver.find_element_by_xpath("//button[@class='dt-button buttons-csv buttons-html5']").click()
