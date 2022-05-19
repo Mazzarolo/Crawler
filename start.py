@@ -3,6 +3,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 import os
+import requests
+from bs4 import BeautifulSoup
+import csv
 
 def delay ():
     time.sleep(3)
@@ -71,6 +74,20 @@ while i <= numRows:
     delay()
 
     driver.find_element_by_xpath("//input[@class='button']").click()
+
+    f = csv.writer(open('produtos.csv', 'w'))
+
+    pages = []
+
+    html = driver.page_source
+
+    soup = BeautifulSoup(html, "html.parser")
+    all_tables = soup.find_all('td', {'class': 'NFCDetalhe_Item'})
+    #tbody = all_tables.find_all('td')
+
+    for item in all_tables:
+        print(item.text)
+        f.writerow(item.text)
 
     driver.switch_to.default_content()
 
