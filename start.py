@@ -26,10 +26,10 @@ baseLink = "https://nfg.sefaz.rs.gov.br/cadastro/ConsultaDocumentos.aspx"
 
 driver.get(baseLink)
 
-cpf = "05303179079"
+cpf = "your pdf"
 driver.find_element_by_name("nro_cpf_loginNfg").send_keys(cpf)
 
-cod = "3u4m0d0c3s"
+cod = "your password"
 driver.find_element_by_name("senha_loginNfg").send_keys(cod)
 
 frames = driver.find_elements_by_tag_name("iframe")
