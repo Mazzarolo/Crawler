@@ -26,10 +26,10 @@ baseLink = "https://nfg.sefaz.rs.gov.br/cadastro/ConsultaDocumentos.aspx"
 
 driver.get(baseLink)
 
-cpf = "your cpf"
+cpf = "05303179079"
 driver.find_element_by_name("nro_cpf_loginNfg").send_keys(cpf)
 
-cod = "your password"
+cod = "3u4m0d0c3s"
 driver.find_element_by_name("senha_loginNfg").send_keys(cod)
 
 frames = driver.find_elements_by_tag_name("iframe")
@@ -85,9 +85,10 @@ while i <= numRows:
     all_tables = soup.find_all('td', {'class': 'NFCDetalhe_Item'})
     #tbody = all_tables.find_all('td')
 
-    for item in all_tables:
-        print(item.text)
-        f.writerow(item.text)
+    with open('produtos.csv', mode='w') as produtos:
+        for item in all_tables:
+            escrivao = csv.writer(produtos)
+            escrivao.writerow([item.text])
 
     driver.switch_to.default_content()
 
