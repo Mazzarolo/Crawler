@@ -30,7 +30,7 @@ driver.get(baseLink)
 cpf = "your cpf"
 driver.find_element_by_name("nro_cpf_loginNfg").send_keys(cpf)
 
-cod = "yout pass"
+cod = "your pass"
 driver.find_element_by_name("senha_loginNfg").send_keys(cod)
 
 frames = driver.find_elements_by_tag_name("iframe")
@@ -52,7 +52,7 @@ except:
 
 driver.execute_script('document.getElementById("txtDtInicial").value = "01012022"')
 
-driver.execute_script('document.getElementById("txtDtFinal").value = "17052022"')
+driver.execute_script('document.getElementById("txtDtFinal").value = "08072022"')
 
 delay()
 
@@ -76,7 +76,8 @@ while page != pageAnt:
         link = driver.find_element_by_xpath(xpath).get_attribute("href")
         if i == 1 and page == 1:
             links[0] = link
-        links.append(link)
+        else:
+            links.append(link)
         i += 1
 
     pageAnt = page
@@ -130,6 +131,12 @@ for link in links:
                     break
                 if item.text == "Valor total R$":
                     finish = True
+            try:
+                placeXPath = "//table[@width='500']/tbody/tr/td/table/tbody/tr[1]/td/table[1]/tbody/tr[1]/td[2]"
+                place = driver.find_element_by_xpath(placeXPath).text
+                f.write("\nEstabelecimento;" + place + ";\n")
+            except:
+                print("Falaha no estabelecimento")
 
         #for item in all_tables:
             #print(item.text)
