@@ -27,10 +27,10 @@ baseLink = "https://nfg.sefaz.rs.gov.br/cadastro/ConsultaDocumentos.aspx"
 
 driver.get(baseLink)
 
-cpf = "your cpf"
+cpf = "52331342091"
 driver.find_element_by_name("nro_cpf_loginNfg").send_keys(cpf)
 
-cod = "your password"
+cod = "Not7@2w#s"
 driver.find_element_by_name("senha_loginNfg").send_keys(cod)
 
 frames = driver.find_elements_by_tag_name("iframe")
@@ -85,7 +85,7 @@ while page != pageAnt:
 
     page = int(driver.find_element_by_xpath("//a[@class='paginate_button current']").text)
 
-    print(page)
+    #print(page)
 
 i = 1
 
@@ -98,7 +98,7 @@ for link in links:
         driver.switch_to.frame(frames[0])
         delay()
         driver.find_element_by_xpath("//input[@class='button']").click()
-        f = csv.writer(open("tmp\\produtos" + str(i) + ".csv", 'w'))
+        #f = csv.writer(open("tmp\\produtos" + str(i) + ".csv", 'w'))
 
         pages = []
 
@@ -108,14 +108,32 @@ for link in links:
         all_tables = soup.find_all('td', {'class': 'NFCDetalhe_Item'})
         # tbody = all_tables.find_all('td')
 
-        with open("tmp\\produtos" + str(i) + ".csv", mode='w') as produtos:
-            for item in all_tables:
-                escrivao = csv.writer(produtos)
-                escrivao.writerow([item.text])
+        cols = 0
+        start = False
+        finish = False
 
-        for item in all_tables:
-            print(item.text)
-            f.writerow(item.text)
+        arq = "tmp\\produtos" + str(i) + ".csv"
+
+        with open(arq, mode='w', encoding='UTF8') as f:
+            for item in all_tables:
+                f.write(item.text)
+                f.write(";")
+                cols += 1
+                if cols == 5 and (not start):
+                    cols = 0
+                    f.write("Vl Total;\n")
+                    start = True
+                if cols == 6:
+                    cols = 0
+                    f.write("\n")
+                if finish:
+                    break
+                if item.text == "Valor total R$":
+                    finish = True
+
+        #for item in all_tables:
+            #print(item.text)
+            #f.writerow(item.text)
 
         driver.switch_to.default_content()
 
