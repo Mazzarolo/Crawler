@@ -52,7 +52,7 @@ except:
 
 driver.execute_script('document.getElementById("txtDtInicial").value = "01012022"')
 
-driver.execute_script('document.getElementById("txtDtFinal").value = "08072022"')
+driver.execute_script('document.getElementById("txtDtFinal").value = "10072022"')
 
 delay()
 
@@ -136,7 +136,7 @@ for link in links:
                 place = driver.find_element_by_xpath(placeXPath).text
                 f.write("\nEstabelecimento;" + place + ";\n")
             except:
-                print("Falaha no estabelecimento")
+                print("Falaha no estabelecimento" + str(i))
 
         #for item in all_tables:
             #print(item.text)
